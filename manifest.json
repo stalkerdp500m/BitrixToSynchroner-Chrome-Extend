@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "bitrix-Synchroner  extend",
+    "version": "0.0.0",
+    "web_accessible_resources": [
+        "scriptBtr.js"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://system.synchroner.com/Users/Profiles/Create*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "bitrixSynchron.js"
+            ]
+        }
+    ]
+}
