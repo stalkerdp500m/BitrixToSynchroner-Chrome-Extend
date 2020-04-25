@@ -4,12 +4,18 @@
 $postData = file_get_contents('php://input');
 $data = json_decode($postData, true);
 
-//$btrDealId =$data['btrDealId'];
+$btrDealId =$data['btrDealId'];
 
-$btrDealId='5891';// сделка для теста
+
 
 if($btrDealId){
-   include './btrConf.php';
+
+
+   include './btrConf.php'; 
+   // должен содержать адрес портала с пользователем и токеном в переменной
+   // $HOOKBIT = 'https://exempl.bitrix24.ua/rest/idManager/Token/';
+
+
 
 
 
@@ -23,7 +29,7 @@ echo json_encode($clintData);
 }
 
 
-function BitrixGetContact($btrDealId)
+function BitrixGetContact($btrDealId) // получаю ID контакта по номеру сделки
 {
     global $HOOKBIT;
 
@@ -66,8 +72,6 @@ function BitrixGetContact($btrDealId)
         } else {
             $status = 'false';
         }
-
-
         return $CONTACT_ID ;
     } else return array(
         'status' => 'false',
@@ -77,7 +81,7 @@ function BitrixGetContact($btrDealId)
 
 
 
-function BitrixGetclintData($CONTACT_ID){
+function BitrixGetclintData($CONTACT_ID){ // получаю данные клиента
 
    global $HOOKBIT;
 
@@ -111,7 +115,7 @@ function BitrixGetclintData($CONTACT_ID){
 
        if (json_last_error() === JSON_ERROR_NONE) {
 
-           if (array_key_exists('result', $otvet)) {
+           if (array_key_exists('result', $otvet)) { //получил ответ от битрикса. Ниже нужно все кастомные поля типа 'UF_CRM_ заменить на свои
 
                $name = $otvet["result"]["NAME"];
                $surname=$otvet["result"]["LAST_NAME"];
@@ -144,7 +148,6 @@ $parentnames = preg_split("/[\s,]+/",$otvet["result"]['UF_CRM_5B0FF4D6DC068']);
                $status = 'false';
                $nameClint = " ";
            }
-
 
 
            $clintData=array(
